@@ -7,6 +7,9 @@ void main() {
     designSize: Size(428, 926),
     builder: () => MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        scaffoldBackgroundColor: Color(0xFFF2F2F2),
+      ),
       home: AppController(),
     ),
   ));

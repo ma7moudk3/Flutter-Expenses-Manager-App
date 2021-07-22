@@ -14,6 +14,7 @@ class _DailyScreenState extends State<DailyScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFFF2F2F2),
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
@@ -31,7 +32,7 @@ class _DailyScreenState extends State<DailyScreen> {
           )
         ],
       ),
-      backgroundColor: Color(0xFFFCFCFC),
+      //  backgroundColor: Color(0xFFFCFCFC),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -202,7 +203,7 @@ class _DailyScreenState extends State<DailyScreen> {
                         "\$1780.00",
                         textAlign: TextAlign.end,
                         style: TextStyle(
-                            fontSize: 20,
+                            fontSize: 20.sp,
                             color: black,
                             fontWeight: FontWeight.bold),
                         overflow: TextOverflow.ellipsis,

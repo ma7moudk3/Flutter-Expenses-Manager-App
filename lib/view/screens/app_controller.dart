@@ -54,6 +54,7 @@ class _AppControllerState extends State<AppController> {
     return AnimatedBottomNavigationBar(
       activeColor: primary,
       splashColor: secondary,
+
       inactiveColor: Colors.black.withOpacity(0.5),
       icons: iconItems,
       activeIndex: pageIndex,
