@@ -24,7 +24,7 @@ class PrimaryText extends StatelessWidget {
               fontSize: ScreenUtil().setSp(fontSize),
               color: textColor,
               fontWeight: fontWeight,
-              fontFamily: "SuisseIntl")),
+              fontFamily: "GTWalsheim")),
     );
   }
 }

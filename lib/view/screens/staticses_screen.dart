@@ -3,6 +3,7 @@ import 'package:expense_manager/view/widgets/chart_widget.dart';
 import 'package:expense_manager/view/widgets/primaryText.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:expense_manager/constances/daily_constanse.dart';
 
@@ -44,7 +45,7 @@ class _StaticsesScreenState extends State<StaticsesScreen> {
         actions: [
           IconButton(
             onPressed: () {},
-            icon: Icon(Icons.search),
+            icon: Icon(AntDesign.search1),
             color: Colors.black,
           )
         ],
