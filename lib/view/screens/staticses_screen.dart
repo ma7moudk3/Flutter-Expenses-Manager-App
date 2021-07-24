@@ -1,5 +1,6 @@
 import 'package:expense_manager/constances/colors.dart';
 import 'package:expense_manager/view/widgets/chart_widget.dart';
+import 'package:expense_manager/view/widgets/month_list_widget.dart';
 import 'package:expense_manager/view/widgets/primaryText.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -52,58 +53,9 @@ class _StaticsesScreenState extends State<StaticsesScreen> {
       ),
       body: Column(
         children: [
-          Container(
-              height: 120.h,
-              padding: EdgeInsets.only(top: 20),
-              color: Colors.white,
-              child: Row(
-                children: List.generate(
-                  months.length,
-                  (index) => Container(
-                    width: ScreenUtil().screenWidth / months.length,
-                    child: GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          activeMonth = index;
-                        });
-                      },
-                      child: Column(
-                        children: [
-                          PrimaryText(
-                            months[index]['label'],
-                            fontSize: 14,
-                            textColor: Color(0xFF0B0E1D).withOpacity(0.5),
-                          ),
-                          SizedBox(
-                            height: 10.h,
-                          ),
-                          Container(
-                            width: 60.w,
-                            height: 45.h,
-                            decoration: BoxDecoration(
-                                color: activeMonth == index
-                                    ? primary
-                                    : Colors.transparent,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10)),
-                                border: Border.all(
-                                    color: activeMonth == index
-                                        ? primary
-                                        : Color(0xFF090B1C).withOpacity(0.2))),
-                            child: PrimaryText(
-                              months[index]['day'],
-                              textColor: activeMonth == index
-                                  ? Colors.white
-                                  : Color(0xFF090B1C),
-                              fontSize: 14,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              )),
+          MonthListWidget(
+            activeMonth: activeMonth,
+          ),
           Padding(
             padding: const EdgeInsets.only(left: 20, right: 20, top: 15),
             child: Container(
