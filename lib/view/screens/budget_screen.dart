@@ -1,5 +1,6 @@
 import 'package:expense_manager/constances/budgets_constanses.dart';
 import 'package:expense_manager/constances/colors.dart';
+import 'package:expense_manager/view/screens/create_budget_screen.dart';
 import 'package:expense_manager/view/widgets/month_list_widget.dart';
 import 'package:expense_manager/view/widgets/primaryText.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +28,16 @@ class _BudgetScreenState extends State<BudgetScreen> {
           fontSize: 22,
         ),
         actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => CreateBudgetScreen()),
+              );
+            },
+            icon: Icon(AntDesign.plus),
+            color: Colors.black,
+          ),
           IconButton(
             onPressed: () {},
             icon: Icon(AntDesign.search1),

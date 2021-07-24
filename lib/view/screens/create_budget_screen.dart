@@ -6,12 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class CreateExpenseScreen extends StatefulWidget {
+class CreateBudgetScreen extends StatefulWidget {
   @override
-  _CreateExpenseScreenState createState() => _CreateExpenseScreenState();
+  _CreateBudgetScreenState createState() => _CreateBudgetScreenState();
 }
 
-class _CreateExpenseScreenState extends State<CreateExpenseScreen> {
+class _CreateBudgetScreenState extends State<CreateBudgetScreen> {
   int activeCategory = 0;
   TextEditingController _budgetName =
       TextEditingController(text: "Grocery Budget");

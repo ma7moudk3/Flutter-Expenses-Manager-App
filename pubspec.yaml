@@ -32,6 +32,9 @@ dependencies:
   flutter_icons: ^1.1.0
   flutter_screenutil: ^5.0.0+2
   fl_chart: ^0.36.3
+  percent_indicator: "^2.1.7+2"
+  intl: ^0.17.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

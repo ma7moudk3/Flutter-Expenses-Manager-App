@@ -1,6 +1,7 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:expense_manager/constances/colors.dart';
-import 'package:expense_manager/view/screens/create_expense_screen.dart';
+import 'package:expense_manager/view/screens/create_budget_screen.dart';
+import 'package:expense_manager/view/screens/create_transaction.dart';
 import 'package:expense_manager/view/screens/daily_screen.dart';
 import 'package:expense_manager/view/screens/profile_screen.dart';
 import 'package:expense_manager/view/screens/staticses_screen.dart';
@@ -27,7 +28,7 @@ class _AppControllerState extends State<AppController> {
             StaticsesScreen(),
             BudgetScreen(),
             ProfileScreen(),
-            CreateExpenseScreen(),
+            NewTransactionScreen(),
           ],
         ),
         bottomNavigationBar: getBottomNavigationBar(),
