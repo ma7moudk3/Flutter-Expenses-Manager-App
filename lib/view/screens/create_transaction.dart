@@ -133,6 +133,13 @@ class _NewTransactionScreenState extends State<NewTransactionScreen> {
                 SizedBox(
                   height: 20,
                 ),
+                Text(
+                  "date of transaction",
+                  style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 13,
+                      color: Color(0xff67727d)),
+                ),
                 TextField(
                   controller: _dateController,
                   //  focusNode: _focus,
@@ -144,6 +151,9 @@ class _NewTransactionScreenState extends State<NewTransactionScreen> {
                       fontSize: 17, fontWeight: FontWeight.bold, color: black),
                   decoration: InputDecoration(
                       hintText: "Enter date", border: InputBorder.none),
+                ),
+                SizedBox(
+                  height: 20,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -208,7 +218,7 @@ class _NewTransactionScreenState extends State<NewTransactionScreen> {
     );
   }
 
-  DateTime _chosenDateTime;
+  DateTime _chosenDateTime = DateTime.now();
 
   void _showDatePicker(ctx) {
     // showCupertinoModalPopup is a built-in function of the cupertino library
@@ -230,16 +240,13 @@ class _NewTransactionScreenState extends State<NewTransactionScreen> {
                           });
                         }),
                   ),
-
-                  // Close the modal
                   CupertinoButton(
                     child: Text('OK'),
                     onPressed: () {
-                      //       FocusScope.of(context).unfocus();
                       String formattedDate =
                           DateFormat('yyyy-MM-dd').format(_chosenDateTime);
                       _dateController.text = formattedDate;
-                            print(_dateController.text);
+                      print(_dateController.text);
 
                       Navigator.of(ctx).pop();
                     },
