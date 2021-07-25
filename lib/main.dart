@@ -1,4 +1,5 @@
 import 'package:expense_manager/view/screens/app_controller.dart';
+import 'package:expense_manager/view/screens/onBoardingScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -10,7 +11,7 @@ void main() {
       theme: ThemeData(
         scaffoldBackgroundColor: Color(0xFFF2F2F2),
       ),
-      home: AppController(),
+      home: OnBoardingScreen(),
     ),
   ));
 }

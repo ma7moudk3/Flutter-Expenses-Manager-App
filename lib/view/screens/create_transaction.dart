@@ -200,16 +200,6 @@ class _NewTransactionScreenState extends State<NewTransactionScreen> {
                     ),
                   ],
                 ),
-                // Container(
-                //   height: 200,
-                //   child: CupertinoDatePicker(
-                //     mode: CupertinoDatePickerMode.date,
-                //     //initialDateTime: DateTime(1969, 1, 1),
-                //     onDateTimeChanged: (DateTime newDateTime) {
-                //       // Do something
-                //     },
-                //   ),
-                // ),
               ],
             ),
           )
@@ -219,7 +209,6 @@ class _NewTransactionScreenState extends State<NewTransactionScreen> {
   }
 
   DateTime _chosenDateTime = DateTime.now();
-
   void _showDatePicker(ctx) {
     // showCupertinoModalPopup is a built-in function of the cupertino library
     showCupertinoModalPopup(
