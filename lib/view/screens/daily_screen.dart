@@ -94,8 +94,7 @@ class _DailyScreenState extends State<DailyScreen> {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                  children: List.generate(daily.length, (index) {
+              child: ListView.builder(itemBuilder: (ctx, index) {
                 return Column(
                   children: [
                     Row(
@@ -175,7 +174,7 @@ class _DailyScreenState extends State<DailyScreen> {
                     )
                   ],
                 );
-              })),
+              }),
             ),
             SizedBox(
               height: 15,
