@@ -1,11 +1,14 @@
 import 'package:expense_manager/constances/categories_constanse.dart';
 import 'package:expense_manager/constances/colors.dart';
+import 'package:expense_manager/view/widgets/custom_text_field.dart';
 import 'package:expense_manager/view/widgets/primaryText.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
+
+import 'create_budget_screen.dart';
 
 class NewTransactionScreen extends StatefulWidget {
   @override
@@ -116,47 +119,18 @@ class _NewTransactionScreenState extends State<NewTransactionScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "budget name",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 13,
-                        color: Color(0xff67727d)),
-                  ),
-                  TextField(
+                  CustomTextField(
                     controller: _budgetName,
-                    cursorColor: black,
-                    style: TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold,
-                        color: black),
-                    decoration: InputDecoration(
-                        hintText: "Enter Budget Name",
-                        border: InputBorder.none),
+                    title: 'Transaction name',
+                    hint: 'Enter Tranaction name',
                   ),
                   SizedBox(
                     height: 20,
                   ),
-                  Text(
-                    "date of transaction",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 13,
-                        color: Color(0xff67727d)),
-                  ),
-                  TextField(
-                    controller: _dateController,
-                    //  focusNode: _focus,
-                    cursorColor: black,
-                    onTap: () {
-                      _showDatePicker(context);
-                    },
-                    style: TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold,
-                        color: black),
-                    decoration: InputDecoration(
-                        hintText: "Enter date", border: InputBorder.none),
+                  CustomTextField(
+                    controller: _budgetName,
+                    title: 'date of transaction',
+                    hint: 'Enter date',
                   ),
                   SizedBox(
                     height: 20,
@@ -166,28 +140,10 @@ class _NewTransactionScreenState extends State<NewTransactionScreen> {
                     children: [
                       Container(
                         width: (ScreenUtil().screenWidth - 140),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Enter budget",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 13,
-                                  color: Color(0xff67727d)),
-                            ),
-                            TextField(
-                              controller: _budgetPrice,
-                              cursorColor: black,
-                              style: TextStyle(
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.bold,
-                                  color: black),
-                              decoration: InputDecoration(
-                                  hintText: "Enter Budget",
-                                  border: InputBorder.none),
-                            ),
-                          ],
+                        child: CustomTextField(
+                          controller: _budgetName,
+                          title: 'Budget value',
+                          hint: 'Enter Budget',
                         ),
                       ),
                       SizedBox(

@@ -1,6 +1,6 @@
 import 'package:expense_manager/constances/categories_constanse.dart';
 import 'package:expense_manager/constances/colors.dart';
-import 'package:expense_manager/constances/daily_constanse.dart';
+import 'package:expense_manager/view/widgets/custom_text_field.dart';
 import 'package:expense_manager/view/widgets/primaryText.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
@@ -112,23 +112,10 @@ class _CreateBudgetScreenState extends State<CreateBudgetScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "budget name",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 13,
-                        color: Color(0xff67727d)),
-                  ),
-                  TextField(
+                  CustomTextField(
                     controller: _budgetName,
-                    cursorColor: black,
-                    style: TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold,
-                        color: black),
-                    decoration: InputDecoration(
-                        hintText: "Enter Budget Name",
-                        border: InputBorder.none),
+                    title: 'Budget name',
+                    hint: 'Enter Budget name',
                   ),
                   SizedBox(
                     height: 20,
@@ -138,28 +125,10 @@ class _CreateBudgetScreenState extends State<CreateBudgetScreen> {
                     children: [
                       Container(
                         width: (ScreenUtil().screenWidth - 140),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Enter budget",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 13,
-                                  color: Color(0xff67727d)),
-                            ),
-                            TextField(
-                              controller: _budgetPrice,
-                              cursorColor: black,
-                              style: TextStyle(
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.bold,
-                                  color: black),
-                              decoration: InputDecoration(
-                                  hintText: "Enter Budget",
-                                  border: InputBorder.none),
-                            ),
-                          ],
+                        child: CustomTextField(
+                          controller: _budgetPrice,
+                          title: 'Budget value',
+                          hint: 'Enter Budget value',
                         ),
                       ),
                       SizedBox(
