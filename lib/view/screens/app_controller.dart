@@ -21,6 +21,7 @@ class _AppControllerState extends State<AppController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         body: IndexedStack(
           index: pageIndex,
           children: [

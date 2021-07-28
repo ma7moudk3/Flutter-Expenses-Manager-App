@@ -1,4 +1,5 @@
 import 'package:expense_manager/constances/colors.dart';
+import 'package:expense_manager/view/widgets/primaryText.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
@@ -142,7 +143,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "United Bank Asia",
+                                "Monthly Salary",
                                 style: TextStyle(
                                     fontWeight: FontWeight.w500,
                                     fontSize: 12,
@@ -152,7 +153,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 height: 10,
                               ),
                               Text(
-                                "\$2446.90",
+                                "\$1500",
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 20,
@@ -160,15 +161,82 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ),
                             ],
                           ),
-                          Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(color: white)),
-                            child: Padding(
-                              padding: const EdgeInsets.all(13.0),
-                              child: Text(
-                                "Update",
-                                style: TextStyle(color: white),
+                          InkWell(
+                            onTap: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                        content: Container(
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          PrimaryText(
+                                            'Edit Your salary',
+                                            textColor: Colors.black,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 22,
+                                          ),
+                                          Divider(
+                                            thickness: 1.2,
+                                            color: grey,
+                                            height: 60,
+                                          ),
+                                          Text(
+                                            "salary value",
+                                            textAlign: TextAlign.start,
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 13,
+                                                color: Color(0xff67727d)),
+                                          ),
+                                          TextField(
+                                            cursorColor: black,
+                                            style: TextStyle(
+                                                fontSize: 17,
+                                                fontWeight: FontWeight.bold,
+                                                color: black),
+                                            decoration: InputDecoration(
+                                                hintText:
+                                                    "Enter New Budget Value",
+                                                border: InputBorder.none),
+                                          ),
+                                          SizedBox(
+                                            height: 25,
+                                          ),
+                                          Center(
+                                            child: Container(
+                                              width: 80,
+                                              height: 50,
+                                              decoration: BoxDecoration(
+                                                  color: primary,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          15)),
+                                              child: PrimaryText(
+                                                'Save',
+                                                fontWeight: FontWeight.bold,
+                                                textColor: Colors.white,
+                                              ),
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ));
+                                  });
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(color: white)),
+                              child: Padding(
+                                padding: const EdgeInsets.all(13.0),
+                                child: Text(
+                                  "Update",
+                                  style: TextStyle(color: white),
+                                ),
                               ),
                             ),
                           )

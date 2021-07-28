@@ -22,6 +22,9 @@ class _CreateBudgetScreenState extends State<CreateBudgetScreen> {
         appBar: AppBar(
           backgroundColor: Colors.white,
           elevation: 0,
+          iconTheme: IconThemeData(
+            color: Colors.black, //change your color here
+          ),
           title: PrimaryText(
             'Create Budget',
             fontWeight: FontWeight.bold,
