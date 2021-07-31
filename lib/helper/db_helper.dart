@@ -69,4 +69,14 @@ class DBHelper{
     } catch (e) {}
   }
 
+  Future<List<MyTransaction>> getAllTransactions() async {
+    try {
+      List<Map> resault = await database.query(transactionTableName);
+      List<MyTransaction> transactions = resault.map((e) => MyTransaction.fromJson(e)).toList();
+      return transactions;
+    } catch (e) {
+      print(e);
+    }
+  }
+
 }
