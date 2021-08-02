@@ -8,7 +8,7 @@ class DBHelper{
   static DBHelper dbHelper = DBHelper._();
   static final  String databaseName = 'ExpensesManager.db';
   // Transactions Table Constance's
-  static final String transactionTableName = 'Transaction';
+  static final String transactionTableName = 'MyTransactions';
   static final String columnTransactionName = 'transactionName';
   static final String columnTransactionID = 'transactionID';
   static final String columnTransactionDate = 'transactionDate';
@@ -36,8 +36,9 @@ class DBHelper{
       String dbPath = appDocPath + '/$databaseName';
       Database database =
       await openDatabase(dbPath, version: 1, onCreate: (database, v) {
-        createTransactionTable(database);
         createCategoryTable(database);
+        createTransactionTable(database);
+        print("createConnectionWithDatabase()");
       });
       return database;
     } catch (e) {
@@ -46,19 +47,21 @@ class DBHelper{
   }
 
   createTransactionTable(Database database) async {
-    database.execute(
-        '''CREATE TABLE $transactionTableName
-        ($columnTransactionID INTEGER PRIMARY KEY AUTOINCREMENT,
-        $columnTransactionName TEXT PRIMARY KEY,
-        $columnTransactionDate TEXT,
-        $columnTransactionValue DOUBLE,
-        $columnTransactionCategory TEXT,
-        FOREIGN KEY ($columnTransactionCategory) REFERENCES $categoriesTableName($columnCategoryName) ON DELETE CASCADE )''');
+    database.execute('PRAGMA foreign_keys=ON');
+    await database.execute(
+        '''CREATE TABLE $transactionTableName($columnTransactionID INTEGER PRIMARY KEY AUTOINCREMENT,
+        $columnTransactionName TEXT, 
+        $columnTransactionDate TEXT, 
+        $columnTransactionValue DOUBLE, 
+        $columnTransactionCategory TEXT, 
+        FOREIGN KEY ($columnTransactionCategory) REFERENCES $categoriesTableName($columnCategoryName) ON DELETE CASCADE );''');
   }
 
 
+
+
   createCategoryTable(Database database) async {
-    database.execute(
+    await database.execute(
         'CREATE TABLE $categoriesTableName ($columnCategoryName TEXT PRIMARY KEY, $columnCategoryImage TEXT)');
   }
 
@@ -71,6 +74,7 @@ class DBHelper{
 
   Future<List<MyTransaction>> getAllTransactions() async {
     try {
+      Database database = await initDatabase();
       List<Map> resault = await database.query(transactionTableName);
       List<MyTransaction> transactions = resault.map((e) => MyTransaction.fromJson(e)).toList();
       return transactions;
