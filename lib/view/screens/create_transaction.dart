@@ -174,7 +174,7 @@ class _NewTransactionScreenState extends State<NewTransactionScreen> {
                               _formKey.currentState.save();
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
-                                    content: Text('Processing Data')),
+                                    content: Text('Added Successfully')),
                               );
                               print(transactionName);
                               print(transactionDate);

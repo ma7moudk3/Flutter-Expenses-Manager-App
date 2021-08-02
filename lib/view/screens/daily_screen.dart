@@ -1,9 +1,11 @@
 import 'package:expense_manager/constances/colors.dart';
 import 'package:expense_manager/constances/daily_constanse.dart';
+import 'package:expense_manager/helper/db_helper.dart';
 import 'package:expense_manager/view/widgets/primaryText.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 
 class DailyScreen extends StatefulWidget {
   @override
@@ -14,6 +16,8 @@ class _DailyScreenState extends State<DailyScreen> {
   int activeDay = 0;
   @override
   Widget build(BuildContext context) {
+    var weekDays = getLastWeek();
+
     return Scaffold(
       backgroundColor: Color(0xFFF2F2F2),
       appBar: AppBar(
@@ -42,9 +46,9 @@ class _DailyScreenState extends State<DailyScreen> {
               color: Colors.white,
               child: Row(
                 children: List.generate(
-                  days.length,
+                  weekDays.length,
                   (index) => Container(
-                    width: ScreenUtil().screenWidth / days.length,
+                    width: ScreenUtil().screenWidth / weekDays.length,
                     child: GestureDetector(
                       onTap: () {
                         setState(() {
@@ -54,7 +58,7 @@ class _DailyScreenState extends State<DailyScreen> {
                       child: Column(
                         children: [
                           PrimaryText(
-                            days[index]['label'],
+                            DateFormat('EE').format(weekDays[index]).toString(),
                             fontSize: 14,
                             textColor: Color(0xFF0B0E1D).withOpacity(0.5),
                           ),
@@ -74,7 +78,7 @@ class _DailyScreenState extends State<DailyScreen> {
                                         ? primary
                                         : Color(0xFF090B1C).withOpacity(0.2))),
                             child: PrimaryText(
-                              days[index]['day'],
+                              weekDays[index].day.toString(),
                               textColor: activeDay == index
                                   ? Colors.white
                                   : Color(0xFF090B1C),
@@ -89,91 +93,96 @@ class _DailyScreenState extends State<DailyScreen> {
               )),
           Flexible(
             flex: 6,
-            child: ListView.builder(
-                itemCount: daily.length,
-                itemBuilder: (ctx, index) {
-                  return Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            width: (ScreenUtil().screenWidth - 40) * 0.7,
-                            padding: EdgeInsets.all(8),
-                            child: Row(
-                              children: [
-                                Container(
-                                  width: 50.w,
-                                  height: 50.h,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: grey.withOpacity(0.1),
-                                  ),
-                                  child: Center(
-                                    child: Image.asset(
-                                      daily[index]['icon'],
-                                      width: 35.w,
-                                      height: 35.h,
+            child: FutureBuilder(
+              future: DBHelper.dbHelper.getAllTransactions(),
+              builder: (context, snapshot) => ListView.builder(
+                  itemCount: snapshot.data.length,
+                  itemBuilder: (ctx, index) {
+                    return Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              width: (ScreenUtil().screenWidth - 40) * 0.7,
+                              padding: EdgeInsets.all(8),
+                              child: Row(
+                                children: [
+                                  Container(
+                                    width: 50.w,
+                                    height: 50.h,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: grey.withOpacity(0.1),
+                                    ),
+                                    child: Center(
+                                      child: Image.asset(
+                                        daily[index]['icon'],
+                                        width: 35.w,
+                                        height: 35.h,
+                                      ),
                                     ),
                                   ),
-                                ),
-                                SizedBox(width: 15),
-                                Container(
-                                  width: (ScreenUtil().screenWidth - 90) * 0.5,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        daily[index]['name'],
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            color: black,
-                                            fontWeight: FontWeight.w500),
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                      SizedBox(height: 5),
-                                      Text(
-                                        daily[index]['date'],
-                                        style: TextStyle(
-                                            fontSize: 12,
-                                            color: black.withOpacity(0.5),
-                                            fontWeight: FontWeight.w400),
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                    ],
+                                  SizedBox(width: 15),
+                                  Container(
+                                    width:
+                                        (ScreenUtil().screenWidth - 90) * 0.5,
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          snapshot.data[index].transactionName,
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              color: black,
+                                              fontWeight: FontWeight.w500),
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                        SizedBox(height: 5),
+                                        Text(
+                                          snapshot.data[index].transactionDate,
+                                          style: TextStyle(
+                                              fontSize: 12,
+                                              color: black.withOpacity(0.5),
+                                              fontWeight: FontWeight.w400),
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                            Container(
+                              width: (ScreenUtil().screenWidth - 40) * 0.3,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    "${snapshot.data[index].transactionValue} \$",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 15,
+                                        color: Colors.green),
                                   ),
-                                )
-                              ],
-                            ),
-                          ),
-                          Container(
-                            width: (ScreenUtil().screenWidth - 40) * 0.3,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Text(
-                                  daily[index]['price'],
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 15,
-                                      color: Colors.green),
-                                ),
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 65, top: 8),
-                        child: Divider(
-                          thickness: 0.8,
+                                ],
+                              ),
+                            )
+                          ],
                         ),
-                      )
-                    ],
-                  );
-                }),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 65, top: 8),
+                          child: Divider(
+                            thickness: 0.8,
+                          ),
+                        )
+                      ],
+                    );
+                  }),
+            ),
           ),
           SizedBox(
             height: 15,
@@ -218,5 +227,15 @@ class _DailyScreenState extends State<DailyScreen> {
         ],
       ),
     );
+  }
+
+  List<DateTime> getLastWeek() {
+    List<DateTime> weekDays = [];
+    for (var i = 6; i >= 0; i--) {
+      var day = DateTime.now().subtract(Duration(days: i));
+      print(day);
+      weekDays.add(day);
+    }
+    return weekDays;
   }
 }

@@ -35,8 +35,7 @@ class OnBoardingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("Height" + MediaQuery.of(context).size.height.toString());
-    print("width" + MediaQuery.of(context).size.width.toString());
+
     return IntroScreenOnboarding(
       introductionList: list,
       onTapSkipButton: () {
