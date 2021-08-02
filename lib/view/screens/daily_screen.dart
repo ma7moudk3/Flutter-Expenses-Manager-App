@@ -14,6 +14,8 @@ class DailyScreen extends StatefulWidget {
 
 class _DailyScreenState extends State<DailyScreen> {
   int activeDay = 0;
+  String formattedDate = "";
+
   @override
   Widget build(BuildContext context) {
     var weekDays = getLastWeek();
@@ -51,6 +53,9 @@ class _DailyScreenState extends State<DailyScreen> {
                     width: ScreenUtil().screenWidth / weekDays.length,
                     child: GestureDetector(
                       onTap: () {
+                        formattedDate =
+                            DateFormat('yyyy-MM-dd').format(weekDays[index]);
+                        print('formated: $formattedDate');
                         setState(() {
                           activeDay = index;
                         });
@@ -58,7 +63,7 @@ class _DailyScreenState extends State<DailyScreen> {
                       child: Column(
                         children: [
                           PrimaryText(
-                            DateFormat('EE').format(weekDays[index]).toString(),
+                            DateFormat('EE').format(weekDays[index]),
                             fontSize: 14,
                             textColor: Color(0xFF0B0E1D).withOpacity(0.5),
                           ),
@@ -98,89 +103,96 @@ class _DailyScreenState extends State<DailyScreen> {
               builder: (context, snapshot) => ListView.builder(
                   itemCount: snapshot.data.length,
                   itemBuilder: (ctx, index) {
-                    return Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              width: (ScreenUtil().screenWidth - 40) * 0.7,
-                              padding: EdgeInsets.all(8),
-                              child: Row(
-                                children: [
-                                  Container(
-                                    width: 50.w,
-                                    height: 50.h,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: grey.withOpacity(0.1),
-                                    ),
-                                    child: Center(
-                                      child: Image.asset(
-                                        daily[index]['icon'],
-                                        width: 35.w,
-                                        height: 35.h,
+                    if (formattedDate ==
+                        (snapshot.data[index].transactionDate)) {
+                      return Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                width: (ScreenUtil().screenWidth - 40) * 0.7,
+                                padding: EdgeInsets.all(8),
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      width: 50.w,
+                                      height: 50.h,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: grey.withOpacity(0.1),
+                                      ),
+                                      child: Center(
+                                        child: Image.asset(
+                                          daily[index]['icon'],
+                                          width: 35.w,
+                                          height: 35.h,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  SizedBox(width: 15),
-                                  Container(
-                                    width:
-                                        (ScreenUtil().screenWidth - 90) * 0.5,
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          snapshot.data[index].transactionName,
-                                          style: TextStyle(
-                                              fontSize: 15,
-                                              color: black,
-                                              fontWeight: FontWeight.w500),
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                        SizedBox(height: 5),
-                                        Text(
-                                          snapshot.data[index].transactionDate,
-                                          style: TextStyle(
-                                              fontSize: 12,
-                                              color: black.withOpacity(0.5),
-                                              fontWeight: FontWeight.w400),
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ],
+                                    SizedBox(width: 15),
+                                    Container(
+                                      width:
+                                          (ScreenUtil().screenWidth - 90) * 0.5,
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            snapshot
+                                                .data[index].transactionName,
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                color: black,
+                                                fontWeight: FontWeight.w500),
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                          SizedBox(height: 5),
+                                          Text(
+                                            snapshot
+                                                .data[index].transactionDate,
+                                            style: TextStyle(
+                                                fontSize: 12,
+                                                color: black.withOpacity(0.5),
+                                                fontWeight: FontWeight.w400),
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                width: (ScreenUtil().screenWidth - 40) * 0.3,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Text(
+                                      "${snapshot.data[index].transactionValue} \$",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 15,
+                                          color: Colors.green),
                                     ),
-                                  )
-                                ],
-                              ),
-                            ),
-                            Container(
-                              width: (ScreenUtil().screenWidth - 40) * 0.3,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  Text(
-                                    "${snapshot.data[index].transactionValue} \$",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 15,
-                                        color: Colors.green),
-                                  ),
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 65, top: 8),
-                          child: Divider(
-                            thickness: 0.8,
+                                  ],
+                                ),
+                              )
+                            ],
                           ),
-                        )
-                      ],
-                    );
+                          Padding(
+                            padding: const EdgeInsets.only(left: 65, top: 8),
+                            child: Divider(
+                              thickness: 0.8,
+                            ),
+                          )
+                        ],
+                      );
+                    } else {
+                      return Container();
+                    }
                   }),
             ),
           ),
