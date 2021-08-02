@@ -83,4 +83,17 @@ class DBHelper{
     }
   }
 
+    Future<List<MyTransaction>> getTransactionByDate(String date) async {
+    try {
+      database = await initDatabase();
+      List<Map> resault = await database.query(transactionTableName,
+          where: '$columnTransactionDate=?', whereArgs: [date]);
+      List<MyTransaction> transactions = resault.map((e) => MyTransaction.fromJson(e)).toList();
+      return transactions;
+    } catch (e) {
+      print(e);
+    }
+  }
+
+
 }

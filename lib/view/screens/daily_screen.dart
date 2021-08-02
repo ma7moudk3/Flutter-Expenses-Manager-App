@@ -1,6 +1,7 @@
 import 'package:expense_manager/constances/colors.dart';
 import 'package:expense_manager/constances/daily_constanse.dart';
 import 'package:expense_manager/helper/db_helper.dart';
+import 'package:expense_manager/models/transaction.dart';
 import 'package:expense_manager/view/widgets/primaryText.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
@@ -15,11 +16,11 @@ class DailyScreen extends StatefulWidget {
 class _DailyScreenState extends State<DailyScreen> {
   int activeDay = 0;
   String formattedDate = "";
+  double total = 0.0;
 
   @override
   Widget build(BuildContext context) {
     var weekDays = getLastWeek();
-
     return Scaffold(
       backgroundColor: Color(0xFFF2F2F2),
       appBar: AppBar(
@@ -52,10 +53,11 @@ class _DailyScreenState extends State<DailyScreen> {
                   (index) => Container(
                     width: ScreenUtil().screenWidth / weekDays.length,
                     child: GestureDetector(
-                      onTap: () {
+                      onTap: () async {
                         formattedDate =
                             DateFormat('yyyy-MM-dd').format(weekDays[index]);
-                        print('formated: $formattedDate');
+                        total = getTotal(await DBHelper.dbHelper
+                            .getTransactionByDate(formattedDate));
                         setState(() {
                           activeDay = index;
                         });
@@ -99,101 +101,102 @@ class _DailyScreenState extends State<DailyScreen> {
           Flexible(
             flex: 6,
             child: FutureBuilder(
-              future: DBHelper.dbHelper.getAllTransactions(),
-              builder: (context, snapshot) => ListView.builder(
-                  itemCount: snapshot.data.length,
-                  itemBuilder: (ctx, index) {
-                    if (formattedDate ==
-                        (snapshot.data[index].transactionDate)) {
-                      return Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(
-                                width: (ScreenUtil().screenWidth - 40) * 0.7,
-                                padding: EdgeInsets.all(8),
-                                child: Row(
-                                  children: [
-                                    Container(
-                                      width: 50.w,
-                                      height: 50.h,
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: grey.withOpacity(0.1),
-                                      ),
-                                      child: Center(
-                                        child: Image.asset(
-                                          daily[index]['icon'],
-                                          width: 35.w,
-                                          height: 35.h,
+              future: DBHelper.dbHelper.getTransactionByDate(formattedDate),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return ListView.builder(
+                      itemCount: snapshot.data.length,
+                      itemBuilder: (ctx, index) {
+                        return Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+                                  width: (ScreenUtil().screenWidth - 40) * 0.7,
+                                  padding: EdgeInsets.all(8),
+                                  child: Row(
+                                    children: [
+                                      Container(
+                                        width: 50.w,
+                                        height: 50.h,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: grey.withOpacity(0.1),
+                                        ),
+                                        child: Center(
+                                          child: Image.asset(
+                                            daily[index]['icon'],
+                                            width: 35.w,
+                                            height: 35.h,
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    SizedBox(width: 15),
-                                    Container(
-                                      width:
-                                          (ScreenUtil().screenWidth - 90) * 0.5,
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            snapshot
-                                                .data[index].transactionName,
-                                            style: TextStyle(
-                                                fontSize: 15,
-                                                color: black,
-                                                fontWeight: FontWeight.w500),
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                          SizedBox(height: 5),
-                                          Text(
-                                            snapshot
-                                                .data[index].transactionDate,
-                                            style: TextStyle(
-                                                fontSize: 12,
-                                                color: black.withOpacity(0.5),
-                                                fontWeight: FontWeight.w400),
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                        ],
+                                      SizedBox(width: 15),
+                                      Container(
+                                        width: (ScreenUtil().screenWidth - 90) *
+                                            0.5,
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              snapshot
+                                                  .data[index].transactionName,
+                                              style: TextStyle(
+                                                  fontSize: 15,
+                                                  color: black,
+                                                  fontWeight: FontWeight.w500),
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                            SizedBox(height: 5),
+                                            Text(
+                                              snapshot
+                                                  .data[index].transactionDate,
+                                              style: TextStyle(
+                                                  fontSize: 12,
+                                                  color: black.withOpacity(0.5),
+                                                  fontWeight: FontWeight.w400),
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                  width: (ScreenUtil().screenWidth - 40) * 0.3,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Text(
+                                        "${snapshot.data[index].transactionValue} \$",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 15,
+                                            color: Colors.green),
                                       ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                width: (ScreenUtil().screenWidth - 40) * 0.3,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    Text(
-                                      "${snapshot.data[index].transactionValue} \$",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 15,
-                                          color: Colors.green),
-                                    ),
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 65, top: 8),
-                            child: Divider(
-                              thickness: 0.8,
+                                    ],
+                                  ),
+                                )
+                              ],
                             ),
-                          )
-                        ],
-                      );
-                    } else {
-                      return Container();
-                    }
-                  }),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 65, top: 8),
+                              child: Divider(
+                                thickness: 0.8,
+                              ),
+                            )
+                          ],
+                        );
+                      });
+                } else {
+                  return CircularProgressIndicator();
+                }
+              },
             ),
           ),
           SizedBox(
@@ -222,7 +225,7 @@ class _DailyScreenState extends State<DailyScreen> {
                     child: Padding(
                       padding: const EdgeInsets.only(top: 5),
                       child: Text(
-                        "\$1780.00",
+                        "\$ $total",
                         textAlign: TextAlign.end,
                         style: TextStyle(
                             fontSize: 20.sp,
@@ -245,9 +248,17 @@ class _DailyScreenState extends State<DailyScreen> {
     List<DateTime> weekDays = [];
     for (var i = 6; i >= 0; i--) {
       var day = DateTime.now().subtract(Duration(days: i));
-      print(day);
       weekDays.add(day);
     }
     return weekDays;
+  }
+
+  double getTotal(List<MyTransaction> list) {
+    double total = 0.0;
+    for (var i = 0; i < list.length; i++) {
+      total += list[i].transactionValue;
+    }
+    setState(() {});
+    return total;
   }
 }
