@@ -1,16 +1,11 @@
-# expense_manager
+# Flutter Expenses Manager App
+Looking for an expense and budget tool? Stop searching. Expense Manager is simple, intuitive, stable and feature-rich app that is just designed for you. Everything you need at your fingertips to manage the expenditures, checkbook and budgets.
 
-A new Flutter project.
+## Techniques Uese
+✨ SQLite Local Database
+✨ Flutter FrameWoek
+✨ Android Studio
+✨ Dart SDK
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Screen Shots
+<img src="https://user-images.githubusercontent.com/76075722/128597452-a3482a19-3a0a-4365-a239-c692484d773a.png"/>
