@@ -8,4 +8,4 @@ Looking for an expense and budget tool? Stop searching. Expense Manager is simpl
 ✨ Dart SDK
 
 ## Screen Shots
-<img src="https://user-images.githubusercontent.com/76075722/128597452-a3482a19-3a0a-4365-a239-c692484d773a.png"/>
+<img src="https://user-images.githubusercontent.com/76075722/128597452-a3482a19-3a0a-4365-a239-c692484d773a.png" width=260/>
